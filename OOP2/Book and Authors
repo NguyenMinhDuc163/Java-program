@@ -1,0 +1,272 @@
+Cho lớp Author :
+image
+
+Cho lớp Book và mối quan hệ với lớp Author
+image
+
+Cho danh sách sách các cuốn sách và tác giả của cuốn sách đó, 1 cuốn sách có thể có nhiều tác giả. Bạn hãy nhập danh sách này và sắp xếp danh sách sách theo thứ tự tên sách tăng dần về từ điển.
+
+import java.io.*;
+import java.util.*;
+
+class Author{
+    private String name,email;
+    private Character gender;
+
+    public Author(String name, String email, Character gender) {
+        this.name = name;
+        this.email = email;
+        this.gender = gender;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Character getGender() {
+        return gender;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setGender(Character gender) {
+        this.gender = gender;
+    }
+    
+    public String toString(){
+        return "Name : "+this.name+"\n"+"Email : "+this.email+"\n"+"Gender : "+this.gender;
+    }
+}
+class Book {
+    private String nameBook;
+    private Author[] author;
+    private double price;
+    private int soTG;
+    private int qty;
+
+    public Book(String nameBook, double price,int qty,int soTG,Author[] author) {
+        this.nameBook = nameBook;
+        this.author = author;
+        this.price = price;
+        this.soTG = soTG;
+        this.qty = qty;
+    }
+
+    public int getSoTG() {
+        return soTG;
+    }
+
+    public String getNameBook() {
+        return nameBook;
+    }
+
+    public Author[] getAuthor() {
+        return author;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public int getQty() {
+        return qty;
+    }
+
+    public void setNameBook(String nameBook) {
+        this.nameBook = nameBook;
+    }
+
+    public void setAuthor(Author[] author) {
+        this.author = author;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setQty(int qty) {
+        this.qty = qty;
+    }
+    
+    public void display(int n){
+        System.out.println("-----------------------");
+        System.out.println("Book information :");
+        System.out.println("Name : "+this.nameBook);
+        System.out.println("Price : "+Math.round(this.price));
+        System.out.println("Quantity : " + this.qty);
+        System.out.println("Author information :");
+        for(int i=0;i<n;i++){
+            System.out.println("#"+(int)(i+1));
+            System.out.println(author[i]);
+        }
+        
+    }
+}
+
+
+public class Main{
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Book> arr = new ArrayList<>();
+        int n = sc.nextInt();
+        sc.nextLine();
+        for(int i=1;i<=n;i++){
+            sc.nextLine();
+            String tenSach = sc.nextLine();
+            double gia = sc.nextDouble();
+            int cnt = sc.nextInt();
+            int luongTacGia = sc.nextInt();
+            sc.nextLine();
+            Author b[] = new Author[luongTacGia];
+            for(int j=0;j<luongTacGia;j++){
+                String tenTacGia = sc.nextLine();
+                String email = sc.nextLine();
+                Character gt = sc.nextLine().charAt(0);
+                Author tg = new Author(tenTacGia,email,gt);
+                b[j] = tg;          
+            }
+            Book tmp = new Book(tenSach,gia,cnt,luongTacGia,b);
+            arr.add(tmp);
+        }
+        Collections.sort(arr,new Comparator<Book>(){
+            @Override
+            public int compare(Book o1, Book o2) {
+                if(o1.getNameBook().compareTo(o2.getNameBook())<0)
+                    return -1;
+                else
+                    return 1;
+            }
+            
+        });
+        for(Book tmp:arr){
+            tmp.display(tmp.getSoTG());
+        }
+    }
+}
+Input Format
+
+Dòng 1 là N : Số lượng cuốn sách
+
+Mỗi cuốn sách được mô tả như sau :
+
+Dòng 1, 2, 3 : Tên, giá, số lượng
+
+Dòng thứ 4 là số lượng tác giả của cuốn sách
+
+Các dòng tiếp theo mô tả tác giả của cuốn sách : Tên, email, giới tính trên 3 dòng
+
+Constraints
+
+1<=N<=1000
+Output Format
+
+In ra các cuốn sách và thông tin tác giả của cuốn sách, xem output mẫu để rõ hơn yêu cầu in thông tin
+Sample Input 0
+
+4
+-----------------------
+A Brief History of Time
+700000
+2137
+1
+Andrew Neiman
+Andrew Neiman.author@gmail.com
+M
+-----------------------
+Don Quixote
+500000
+2002
+3
+Thomas Che
+Thomas Che.author@gmail.com
+M
+Lucas
+Lucas.author@gmail.com
+M
+Happer Lee
+Happer Lee.author@gmail.com
+M
+-----------------------
+One Hundred Years of Solitude
+700000
+1920
+2
+Feyman
+Feyman.author@gmail.com
+M
+Tom Cruise
+Tom Cruise.author@gmail.com
+M
+-----------------------
+The Great Gatsby
+600000
+1588
+1
+Kirk Wise
+Kirk Wise.author@gmail.com
+M
+-----------------------
+Sample Output 0
+
+-----------------------
+Book information :
+Name : A Brief History of Time
+Price : 700000
+Quantity : 2137
+Author information :
+#1
+Name : Andrew Neiman
+Email : Andrew Neiman.author@gmail.com
+Gender : M
+-----------------------
+Book information :
+Name : Don Quixote
+Price : 500000
+Quantity : 2002
+Author information :
+#1
+Name : Thomas Che
+Email : Thomas Che.author@gmail.com
+Gender : M
+#2
+Name : Lucas
+Email : Lucas.author@gmail.com
+Gender : M
+#3
+Name : Happer Lee
+Email : Happer Lee.author@gmail.com
+Gender : M
+-----------------------
+Book information :
+Name : One Hundred Years of Solitude
+Price : 700000
+Quantity : 1920
+Author information :
+#1
+Name : Feyman
+Email : Feyman.author@gmail.com
+Gender : M
+#2
+Name : Tom Cruise
+Email : Tom Cruise.author@gmail.com
+Gender : M
+-----------------------
+Book information :
+Name : The Great Gatsby
+Price : 600000
+Quantity : 1588
+Author information :
+#1
+Name : Kirk Wise
+Email : Kirk Wise.author@gmail.com
+Gender : M

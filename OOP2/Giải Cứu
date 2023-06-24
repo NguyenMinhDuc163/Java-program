@@ -1,0 +1,164 @@
+Để cứu công chúa BraveQ, hoàng tử Lừa phải trải qua các cuộc giao đấu với ác quỷ, nhân vật hoàng tử có các thông tin : - Power : Chỉ số sức mạnh
+
+Blood : Chỉ số máu
+
+Alive : Mô tả nhân vật còn sống hay đã chết
+
+Các sự kiện mà nhân vật hoàng tử Lừa có thể gặp phải. Nếu nhân vật có máu <= 0 hoặc sức mạnh <= 0 thì nhân vật sẽ bị chết
+
+Gặp nấm độc (mushroom) : Máu giảm đi 15, Sức mạnh giảm 2
+Gặp phù thùy (witch) : Hai bên giao đấu và nếu sức mạnh của phù thủy lớn hơn hoặc bằng chỉ số sức mạnh của hoàng tử thì hoàng tử sẽ thua cuộc và bị chết, ngược lại nếu thắng chỉ số sức mạnh tăng thêm 5
+Gặp cây đậu thần (pea) : Hoàng tử sẽ ăn cây đậu thần và chỉ số máu được cộng thêm 10, chỉ số sức mạnh tăng thêm 2
+Gặp quân lính (soldier) : Hai bên giao đấu và nếu quân lính có sức mạnh lớn hơn hoặc bằng chỉ số sức mạnh của hoàng tử thì hoàng tử thua cuộc và bị chết ngay lập tức, ngược lại nếu đánh thắng quân lính thì chỉ số máu tăng thêm 5 và chỉ số sức mạnh tăng thêm 7.
+import java.util.Date;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int power = Integer.parseInt(sc.nextLine().substring(8));
+        int blood = Integer.parseInt(sc.nextLine().substring(8));
+        String tmp = sc.nextLine();
+        boolean alive = false;
+        if(tmp.equals("ALIVE")) alive = true;
+        NhanVat nv = new NhanVat(power, blood, alive);
+        int suKien = sc.nextInt(); sc.nextLine();
+        for(int i = 0; i < suKien; i++){
+            String s = sc.nextLine();
+            if(s.equals("pea")){
+                nv.pea();
+            }
+            else if(s.equals("mushroom")){
+                nv.mushroom();
+            }
+            else if(s.charAt(0) == 's'){
+                int power1 = Integer.parseInt(s.substring(8));
+                nv.soldier(power1);
+            }
+            else{
+                int power1 = Integer.parseInt(s.substring(6));
+                nv.witch(power1);
+            }
+            System.out.print(nv);
+        }
+    }
+}
+
+
+class NhanVat {
+
+    private int power, blood;
+    private boolean alive;
+
+    public NhanVat(int power, int blood, boolean alive) {
+        this.power = power;
+        this.blood = blood;
+        this.alive = alive;
+    }
+
+    public String toString() {
+        String res = "";
+        if (this.alive) {
+            res = "ALIVE";
+        } else {
+            res = "DEAD";
+        }
+        return "POWER : " + this.power + "\nBLOOD : " + this.blood + "\n" + res + "\n--------------------\n";
+    }
+
+    public void mushroom() {
+        if (this.alive) {
+            this.power -= 2;
+            this.blood -= 15;
+            if (this.power <= 0 || this.blood <= 0) {
+                this.power = 0;
+                this.blood = 0;
+                this.alive = false;
+            }
+        }
+    }
+
+    public void witch(int power) {
+        if (this.alive) {
+            if (power >= this.power) {
+                this.power = 0;
+                this.blood = 0;
+                this.alive = false;
+            } else {
+                this.power += 5;
+            }
+        }
+    }
+
+    public void pea() {
+        if (this.alive) {
+            this.power += 2;
+            this.blood += 10;
+        }
+    }
+
+    public void soldier(int power) {
+        if (this.alive) {
+            if (power >= this.power) {
+                this.power = 0;
+                this.blood = 0;
+                this.alive = false;
+            } else {
+                this.power += 7;
+                this.blood += 5;
+            }
+        }
+    }
+}
+Input Format
+
+Dòng 1 gồm thông tin của hoàng tử lừa bao gồm chỉ số sức mạnh, chỉ số máu, tình trạng ban đầu của nhân vật này là còn sống
+
+Dòng thứ 2 là N : Số lượng sự kiện mà hoàng tử Lừa gặp phải trên đường đi giải cứu công chúa
+
+N dòng tiếp theo mô tả sự kiện, nếu là sự kiện 2 và 4 thì có thêm thông tin chỉ số sức mạnh của phù thủy và quân lính
+
+Constraints
+
+1<=N<=1000
+Output Format
+
+Đối với mỗi sự kiện bạn hãy in ra trạng thái của nhân vật hoàng tử, trong đó nếu nhân vật chết thì in DEAD, ngược lại còn sống thì in ALIVE. Chú ý nếu trong 1 sự kiện nào đó hoàng tử bị chết thì các sự kiện tiếp theo đó coi như không được thực hiện.
+Sample Input 0
+
+POWER : 100
+BLOOD : 100
+ALIVE
+6
+witch 77
+mushroom
+pea
+pea
+soldier 164
+soldier 137
+Sample Output 0
+
+POWER : 105
+BLOOD : 100
+ALIVE
+--------------------
+POWER : 103
+BLOOD : 85
+ALIVE
+--------------------
+POWER : 105
+BLOOD : 95
+ALIVE
+--------------------
+POWER : 107
+BLOOD : 105
+ALIVE
+--------------------
+POWER : 0
+BLOOD : 0
+DEAD
+--------------------
+POWER : 0
+BLOOD : 0
+DEAD
+--------------------

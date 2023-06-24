@@ -1,0 +1,69 @@
+Giá trị độ đo thời gian được biểu diễn bởi ba thành phần: giờ, phút, giây. Cho N giá trị thời gian, hãy sắp xếp danh sách theo thứ tự tăng dần.
+
+Input Format
+
+Dòng đầu ghi số nguyên dương N (không quá 5000) là số lượng giá trị thời gian cần sắp xếp. Mỗi giá trị thời gian biểu diễn trên một dòng bằng ba số nguyên dương, lần lượt là số giờ, số phút, số giây. Trong đó số giờ đảm bảo nhỏ hơn 100, số phút và số giây đảm bảo đúng quy tắc (tức là không quá 59).
+
+Constraints
+
+N/A
+
+Output Format
+
+In ra danh sách đã sắp xếp theo thứ tự tăng dần.
+
+Sample Input 0
+
+5
+25 2 33
+18 3 17
+12 6 19
+1 6 12
+98 51 26
+Sample Output 0
+
+1 6 12
+12 6 19
+18 3 17
+25 2 33
+98 51 26
+
+import java.util.*;
+
+ class Problem {
+    int h, m, s, sum;
+
+    public Problem(int h, int m, int s) {
+        this.h = h;
+        this.m = m;
+        this.s = s;
+        this.sum = h * 3600 + m * 60 + s;
+    }
+    public int getSum(){
+        return this.sum;
+    }
+    public String toString(){
+        return h + " " + m + " " + s;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        sc.useLocale(Locale.US);
+        int n = sc.nextInt();
+        ArrayList<Problem> ans = new ArrayList<>();
+        for(int i = 0; i <  n ;i++){
+            ans.add(new Problem(sc.nextInt(), sc.nextInt(), sc.nextInt()));
+        }
+        ans.sort(new Comparator<Problem>() {
+            @Override
+            public int compare(Problem o1, Problem o2) {
+                return o1.getSum() - o2.getSum();
+            }
+        });
+        for(Problem x: ans){
+            System.out.println(x);
+        }
+    }
+}

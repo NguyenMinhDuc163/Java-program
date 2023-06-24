@@ -1,0 +1,44 @@
+Cho một xâu là tên người chỉ bao gồm các kí tự là chữ cái và dấu cách, giữa các từ trong câu có thể tồn tại nhiều dấu cách hãy chuẩn hóa tên người bằng cách viết hoa chữ cái đầu tiên của từng từ và viết thường các chữ cái còn lại. Xâu tiếp theo là ngày sinh của người này, bao gồm ngày tháng năm phân cách nhau bằng dấu '/', hãy chuẩn hóa ngày sinh của người này về đúng dạng dd/mm/yyyy.
+
+Input Format
+
+Dòng đầu tiên là tên người; Dòng thứ 2 là ngày sinh;
+
+Constraints
+
+Xâu kí tự tên người có không quá 2000 kí tự; Xâu ngày sinh có không quá 10 kí tự. Dữ liệu đảm bảo có dấu '/' giữa ngày, tháng, năm.
+
+Output Format
+
+Dòng đầu tiên in ra tên người sau khi chuẩn hóa. Dòng thứ 2 in ra ngày sinh sau khi đưa về dạng chuẩn dd/mm/yyyy.
+
+Sample Input 0
+
+hoang  dinh NAm
+20/5/1999
+Sample Output 0
+
+Hoang Dinh Nam
+20/05/1999
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String []name = sc.nextLine().split("\\s+");
+        String birth = sc.nextLine();
+        String res ="";
+        for(String x: name){
+            res += x.substring(0,1).toUpperCase() + x.substring(1).toLowerCase() + " ";
+        }
+        res = res.trim();
+        StringBuilder sb = new StringBuilder(birth);
+        if(sb.charAt(1) == '/')
+            sb.insert(0,"0");
+        if(sb.charAt(4) == '/')
+            sb.insert(3,"0");
+        System.out.println(res);
+        System.out.println(sb.toString());
+    }
+}

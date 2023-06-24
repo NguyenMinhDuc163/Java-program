@@ -1,0 +1,105 @@
+Bài toán quản lý danh sách mặt hàng trong đó mỗi mặt hàng sẽ có các thông tin: - Mã mặt hàng: tự động tăng, tính từ MH0001.
+
+Tên mặt hàng: xâu ký tự độ dài không quá 100.
+
+Đơn vị tính: xâu ký tự độ dài không quá 10.
+
+Giá mua: số nguyên dương không quá 7 chữ số.
+
+Giá bán: số nguyên dương không quá 7 chữ số.
+
+Viết chương trình nhập danh sách mặt hàng, sắp xếp theo lợi nhuận (giá bán trừ đi giá mua) giảm dần. Nếu lợi nhuận bằng nhau thì in ra theo thứ tự mã tăng dần.
+
+Input Format
+
+Dòng đầu ghi số M là số mặt hàng (không quá 5000). Tiếp theo là thông tin của M mặt hàng, mỗi mặt hàng ghi trên 4 dòng theo đúng thứ tự đã mô tả (không có mã)
+
+Constraints
+
+N/A
+
+Output Format
+
+Ghi ra danh sách mặt hàng có đầy đủ thông tin ở trên và lợi nhuận tính được (mỗi thông tin cách nhau một khoảng trống)
+
+Sample Input 0
+
+6
+Ca phe
+Thung
+388000
+492000
+Dep
+Thung
+376000
+495000
+Giay Nguoi Lon
+Cai
+389000
+580000
+Giay Nguoi Lon
+Thung
+383000
+503000
+Dep
+Thung
+484000
+647000
+Vay Nu
+Cai
+366000
+516000
+Sample Output 0
+
+MH0003 Giay Nguoi Lon Cai 389000 580000 191000
+MH0005 Dep Thung 484000 647000 163000
+MH0006 Vay Nu Cai 366000 516000 150000
+MH0004 Giay Nguoi Lon Thung 383000 503000 120000
+MH0002 Dep Thung 376000 495000 119000
+MH0001 Ca phe Thung 388000 492000 104000
+
+import java.util.*;
+
+ class Problem {
+    String ma, tenMH, donVi;
+    Integer giaMua, giaBan;
+
+    public Problem(int idx, String tenMH, String donVi, Integer giaMua, Integer giaBan) {
+        this.ma = String.format("MH%04d",idx);
+        this.tenMH = tenMH;
+        this.donVi = donVi;
+        this.giaMua = giaMua;
+        this.giaBan = giaBan;
+    }
+    public int getLoiNhuan(){
+        return this.giaBan -  this.giaMua;
+    }
+    public String toString(){
+        return ma + " " + tenMH + " " + donVi + " " + giaMua + " " + giaBan + " " + (giaBan - giaMua);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        sc.useLocale(Locale.US);
+        int n = sc.nextInt();
+        ArrayList<Problem> ans = new ArrayList<>();
+        for(int i = 0; i <  n ;i++){
+            sc.nextLine();
+            String ten = sc.nextLine();
+            String dv = sc.nextLine();
+            int gmua = sc.nextInt(), gban = sc.nextInt();
+            ans.add(new Problem(i + 1, ten, dv, gmua, gban));
+        }
+        ans.sort(new Comparator<Problem>() {
+            @Override
+            public int compare(Problem o1, Problem o2) {
+                return o2.getLoiNhuan() - o1.getLoiNhuan();
+            }
+        });
+        for(Problem x: ans){
+            System.out.println(x);
+        }
+    }
+}

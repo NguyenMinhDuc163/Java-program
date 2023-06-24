@@ -1,0 +1,219 @@
+Cho lớp Customer :
+image
+
+Lớp Account và mối quan hệ với lớp Customer :
+image
+
+Bạn được cung cấp thông tin khách hàng và tài khoản của họ, tiếp theo đó là một loạt các thao tác nạp và rút tiền. Nhiệm vụ của bạn là in ra thông tin tài khoản của khách hàng sau khi thực hiện 1 loạt các thao tác trên.
+
+import java.util.*;
+import java.util.Map.Entry;
+
+class Account_Bank {
+    private int id;
+    private Customer_Bank Customer;
+    private double balance=0.0;
+
+
+    public Account_Bank(int id, Customer_Bank Customer, double balance) {
+        this.id = id;
+        this.Customer = Customer;
+        this.balance = balance;
+    }
+
+
+    public Account_Bank(int id, Customer_Bank Customer) {
+        this.id = id;
+        this.Customer = Customer;
+    }
+
+
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Customer_Bank getCustomer() {
+        return this.Customer;
+    }
+
+    public void setCustomer(Customer_Bank Customer) {
+        this.Customer = Customer;
+    }
+
+    public double getBalance() {
+        return this.balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public String getCustomerName(){
+        return this.getCustomer().getName();
+    }
+
+    public Account_Bank deposit(double amount ){
+        Account_Bank tmp = new Account_Bank(this.getId(),this.getCustomer(),this.getBalance());
+        tmp.setBalance(tmp.getBalance()+amount);
+        System.out.println("transaction successful");
+        return tmp;
+    }
+
+    public Account_Bank withdraw(double amount){
+        Account_Bank tmp = new Account_Bank(this.getId(),this.getCustomer(),this.getBalance());
+        if(tmp.getBalance()>=amount){
+            System.out.println("transaction successful");
+            tmp.setBalance(tmp.getBalance()-amount);
+
+        }
+        else{
+            System.out.println( "amount withdrawn exceeds the current balance!");
+        }
+        return tmp;
+    }
+
+
+    @Override
+    public String toString() {
+        return ("Account ID : "+this.getId()+"\n"+
+        "Balance : "+String.format("%.2f",this.getBalance())+" $");
+    }
+
+
+
+}
+
+
+class Customer_Bank {
+    private int ID;
+    private String name;
+    private char gender;
+
+
+    public Customer_Bank(int ID, String name, char gender) {
+        this.ID = ID;
+        this.name = name;
+        this.gender = gender;
+    }
+
+
+    public int getID() {
+        return this.ID;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public char getGender() {
+        return this.gender;
+    }
+
+
+    @Override
+    public String toString() {
+        return ("Customer ID : "+this.getID()+"\n"+
+        "Full Name : "+this.getName()+"\n"+
+        "Gender : "+this.getGender()+"\n");
+    }
+
+
+}
+
+
+public class vidu_001{
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String CustomerID = sc.nextLine().substring(14);
+        String FullName = sc.nextLine().substring(12);
+        char gender = sc.nextLine().charAt(9);
+        String AccountID = sc.nextLine().substring(13);
+        String Balance1 = sc.nextLine();
+        String Balance = Balance1.substring(10,Balance1.length()-2);
+        Customer_Bank cb = new Customer_Bank(Integer.parseInt(CustomerID), FullName, gender);
+        Account_Bank ab = new Account_Bank(Integer.parseInt(AccountID), cb,Double.parseDouble(Balance));
+        sc.nextLine();
+        int n = sc.nextInt();
+       
+        sc.nextLine();
+        while(n>0){
+            
+            String step = sc.nextLine();
+            String [] all = step.split("\\s+");
+            if(all[0].equals("withdraw")){
+                ab = ab.withdraw(Double.parseDouble(all[1]));
+            }
+
+            if(all[0].equals("deposit")){
+                ab = ab.deposit(Double.parseDouble(all[1]));
+            }
+
+            n--;
+            
+        }
+
+        System.out.println("-------------------");
+        System.out.println(cb.toString()+ab.toString());
+
+    }
+
+        
+}
+Input Format
+
+Dòng 1 : ID khách hàng
+
+Dòng 2 : Tên khách hàng
+
+Dòng 3 : Giới tính (M hoặc F)
+
+Dòng 4 : ID tài khoản
+
+Dòng 5 : Số dư ban đầu
+
+Dòng 6 là N : Số lượng giao dịch nạp và rút
+
+N dòng tiếp theo có dạng : X Y trong đó X là deposit hoặc withdraw và Y là số tiền nạp rút tương ứng. Với giao dịch rút tiền, in ra thông báo như trong mẫu thiết kế lớp.
+
+Constraints
+
+1<=N<=1000
+Output Format
+
+Đối với mỗi giao dịch in ra "transaction successful" nếu việc nạp rút thành công, nếu việc rút không thành công thì in ra dòng thông báo "amount withdrawn exceeds the current balance!"
+
+Cuối cùng in ra thông tin tài khoản sau khi thực hiện N giao dịch
+
+Sample Input 0
+
+Customer ID : 28
+Full Name : Elon Musk
+Gender : M
+Account ID : 886123
+Balance : 23000.00 $
+-------------------
+6
+withdraw 8680
+withdraw 2379
+deposit 14547
+deposit 19205
+deposit 29487
+withdraw 3818
+Sample Output 0
+
+transaction successful
+transaction successful
+transaction successful
+transaction successful
+transaction successful
+transaction successful
+-------------------
+Customer ID : 28
+Full Name : Elon Musk
+Gender : M
+Account ID : 886123
+Balance : 71362.00 $

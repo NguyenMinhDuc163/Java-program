@@ -1,0 +1,29 @@
+Viết chương trình khai báo lớp Matrix mô tả ma trận các số nguyên. Sau đó nhập và tính tích hai ma trận A cỡ n*m và ma trận B cỡ m*p. Với 1 < n,m,p < 50. Các giá trị trong ma trận đều nguyên dương và không vượt quá 1000. Sử dụng hàm main có sẵn :
+
+image
+
+Input Format
+
+Dòng đầu ghi 3 số n,m,p; n dòng tiếp theo ghi ma trận A; m dòng tiếp theo ghi ma trận B;
+
+Constraints
+
+N/A
+
+Output Format
+
+In ra tích của ma trận
+
+Sample Input 0
+
+3 2 4
+147 790 
+393 462 
+675 445 
+690 172 776 550 
+344 761 900 713 
+Sample Output 0
+
+373190 626474 825072 644120 
+430098 419178 720768 545556 
+618830 454745 924300 688535 

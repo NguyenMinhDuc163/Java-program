@@ -1,0 +1,66 @@
+Viết chương trình khai báo lớp Rectange với các thuộc tính và phương thức như sau:imageViết chương trình nhập vào giá trị độ dài hai cạnh của hình chữ nhật và màu sắc. In ra thông tin về chu vi, diện tích và màu sắc (đã đưa về dạng chuẩn trong đó ký tự đầu viết hoa, các ký tự sau viết thường) của hình chữ nhật đó.
+
+Input Format
+
+Gồm 2 số nguyên a, b là độ dài 2 cạnh hình chữ nhật và một xâu ký tự (không có khoảng trống) mô tả màu sắc.
+
+Constraints
+
+-1000<=a,b<=1000;
+
+Output Format
+
+Nếu hình chữ nhật là hợp lệ (các cạnh đều nguyên dương) thì in ra 3 thông tin: chu vi, diện tích, màu sắc, mỗi thông tin cách nhau một khoảng trống. Nếu dữ liệu không hợp lệ in ra INVALID
+
+Sample Input 0
+
+22 25 Gray
+Sample Output 0
+
+94 550 Gray
+
+import java.util.Locale;
+import java.util.Scanner;
+
+ class Problem {
+    private int width, height;
+    private String color;
+
+    public Problem(int width, int height, String color) {
+        this.width = width;
+        this.height = height;
+        this.color = color;
+    }
+    public int findArea(){
+        return width * height;
+    }
+    public int findperimeter(){
+        return 2 * (width + height);
+    }
+    public void stdColor(){
+        String ans = "";
+        ans += Character.toUpperCase(color.charAt(0));
+        for(int i = 1; i < color.length(); i++){
+            ans += Character.toLowerCase(color.charAt(i));
+        }
+        this.color = ans;
+    }
+    public void disPlay(){
+        stdColor();
+        if(width * height > 0)
+            System.out.println(findperimeter() + " " + findArea() +" " + this.color);
+        else{
+            System.out.println("INVALID");
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        sc.useLocale(Locale.US);
+        String []s = sc.nextLine().split("\\s+");
+        Problem x = new Problem(Integer.parseInt(s[0]), Integer.parseInt(s[1]), s[2]);
+        x.disPlay();
+    }
+}

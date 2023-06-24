@@ -1,0 +1,89 @@
+Một nhân viên làm việc trong công ty được lưu lại các thông tin sau: 1. Mã nhân viên: được gán giá trị là 00001. 2. Họ tên: Xâu ký tự không quá 50 chữ cái. 3. Giới tính: Nam hoặc Nu. 4. Ngày sinh, có thể chưa chuẩn nhưng đủ 3 phần và phân cách bởi dấu /. 5. Địa chỉ: Xâu ký tự không quá 100 chữ cái. 6. Mã số thuế: Dãy số có đúng 10 chữ số. 7. Ngày ký hợp đồng, có thể chưa chuẩn nhưng đủ 3 phần và phân cách bởi dấu /. Viết chương trình nhập một nhân viên (không nhập mã) in ra màn hình thông tin của nhân viên đó. Tên nhân viên được chuẩn hóa về dạng viết hoa chữ cái đầu của từng từ, ngày sinh về đúng dạng chuẩn dd/mm/yyyy
+
+Input Format
+
+Gồm 6 dòng lần lượt ghi các thông tin theo thứ tự đã ghi trong đề bài.
+
+Constraints
+
+N/A
+
+Output Format
+
+Ghi ra đầy đủ thông tin nhân viên trên một dòng, các thông tin cách nhau đúng một khoảng trống.
+
+Sample Input 0
+
+Hoang Dinh NAM
+Nam
+9/9/1998
+Bac Ninh
+8743766435
+10/2/2021
+Sample Output 0
+
+00001 Hoang Dinh Nam Nam 09/09/1998 Bac Ninh 8743766435 10/02/2021
+
+import java.util.Locale;
+import java.util.Scanner;
+ class Problem {
+    private String name;
+    private String sex;
+    private String birth;
+    private String address;
+    private String tax;
+    private String signDay;
+
+    public Problem(String name, String sex, String birth, String address, String tax, String signDay) {
+        this.name = name;
+        this.sex = sex;
+        this.birth = birth;
+        this.address = address;
+        this.tax = tax;
+        this.signDay = signDay;
+    }
+    public void stdDay(){
+        StringBuilder sb = new StringBuilder(this.birth);
+        if(sb.charAt(1) == '/'){
+            sb.insert(0,"0");
+        }
+        if(sb.charAt(4) == '/'){
+            sb.insert(3,"0");
+        }
+        StringBuilder sb1 = new StringBuilder(this.signDay);
+        if(sb1.charAt(1) == '/'){
+            sb1.insert(0,"0");
+        }
+        if(sb1.charAt(4) == '/'){
+            sb1.insert(3,"0");
+        }
+        this.birth = sb.toString();
+        this.signDay = sb1.toString();
+    }
+    public void stdName(){
+        String []s = this.name.split("\\s+");
+        String newName = "";
+        for(String x: s){
+            newName += Character.toUpperCase(x.charAt(0));
+            for(int i = 1; i < x.length(); i++){
+                newName += Character.toLowerCase(x.charAt(i));
+            }
+            newName += " ";
+        }
+        this.name = newName.trim();
+    }
+    public String toString(){
+        return "00001" + " " + name + " " + sex + " " + birth + " " + address + " " + tax + " " + signDay;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        sc.useLocale(Locale.US);
+        Problem x = new Problem(sc.nextLine(), sc.nextLine(), sc.nextLine(), sc.nextLine(),sc.nextLine(), sc.nextLine());
+        x.stdDay();
+        x.stdName();
+        System.out.println(x);
+    }
+}

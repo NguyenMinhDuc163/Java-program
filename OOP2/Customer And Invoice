@@ -1,0 +1,203 @@
+Cho lớp Customer :
+image
+
+Lớp Invoice và mối quan hệ giữa lớp Customer và Invoice
+image
+
+Bạn được cung cấp 1 loạt khách hàng cùng hóa đơn của họ, nhiệm vụ của bạn là tính toán số tiền cần phải trả sau khi áp dụng giảm giá. In ra danh sách khách hàng và hóa đơn của họ theo thứ tự tiền phải trả giảm dần. Nếu 2 khách hàng cùng số tiền hóa đơn thì sắp theo ID khách hàng tăng dần.
+
+import java.io.*;
+import java.util.*;
+
+class Customer{
+    private int id;
+    private String name;
+    private int discount;
+
+    public Customer(int id, String name, int discount) {
+        this.id = id;
+        this.name = name;
+        this.discount = discount;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
+    }
+    
+    public String toString(){
+        return "Customer ID : "+this.id+"\n"+"Full Name : "+this.name;
+    }
+}
+class Invoice{
+    private Customer customer;
+    private int idInvoice;
+    private double amount;
+
+    public Invoice(Customer customer, int idInvoice, double amount) {
+        this.customer = customer;
+        this.idInvoice = idInvoice;
+        this.amount = amount;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public int getIdInvoice() {
+        return idInvoice;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public void setIdInvoice(int idInvoice) {
+        this.idInvoice = idInvoice;
+    }
+
+    public void setAmount() {
+        this.amount = this.amount - this.amount*customer.getDiscount()/100;
+    }
+    
+    public String toString(){
+        return customer.toString()+"\n"+ "Amount : "+String.format("%.2f", this.amount)+" $" +"\n"+"--------------------";
+    }
+}
+public class Main{
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        sc.nextLine();
+        ArrayList<Invoice> arr = new ArrayList<>();
+        for(int i=1;i<=n;i++){
+            sc.nextLine();
+            String cusID[] = sc.nextLine().split("\\s+");
+            String name[] = sc.nextLine().split("\\s+");
+            String dis[] = sc.nextLine().split("\\s+");
+            String invoiID[] = sc.nextLine().split("\\s+");
+            String amount[] = sc.nextLine().split("\\s+");
+            
+            String fullName = "";
+            for(int j=3;j<name.length;j++){
+                fullName += name[j]+" ";
+            }
+            fullName = fullName.substring(0,fullName.length()-1);
+            Customer tmp = new Customer(Integer.parseInt(cusID[cusID.length-1]),fullName,Integer.parseInt(dis[dis.length-1]));
+            Invoice ans = new Invoice(tmp,Integer.parseInt(invoiID[invoiID.length-1]),Double.parseDouble(amount[amount.length-2]));
+            ans.setAmount();
+            arr.add(ans);
+        }
+        Collections.sort(arr,new Comparator<Invoice>(){
+            @Override
+            public int compare(Invoice o1, Invoice o2) {
+                if(o1.getAmount()==o2.getAmount()){
+                    if(o1.getCustomer().getId()<o2.getCustomer().getId())
+                        return -1;
+                    else
+                        return 1;
+                }
+                else if(o1.getAmount()>o2.getAmount())
+                    return -1;
+                else
+                    return 1;
+            }
+            
+        });
+        for(Invoice tmp:arr){
+            System.out.println(tmp);
+        }
+    }
+}
+Input Format
+
+Dòng 1 là N : số lượng khách hàng
+
+Mỗi khách hàng được mô tả thông tin thông qua 5 dòng : ID, Name, Discount, Invoice ID, Amount (Số tiền của hóa đơn), Mỗi khách hàng được phân cách nhau bởi 1 dòng các dấu gạch dưới
+
+Constraints
+
+1<=N<=1000
+Output Format
+
+In ra danh sách khách hàng gồm ID khách hàng, tên khách hàng và số tiền của hóa đơn theo mẫu. Số tiền được in ra lấy 2 số sau dấu thập phân. Mỗi khách hàng được phân cách nhau bởi 1 dòng các dấu gạch dưới
+
+Sample Input 0
+
+5
+--------------------
+Customer ID : 100
+Full Name : Wayne Rooney
+Discount : 6
+Invoice ID : 1355
+Amount : 4472.00 $
+--------------------
+Customer ID : 101
+Full Name : Peter Cech
+Discount : 7
+Invoice ID : 1525
+Amount : 4690.00 $
+--------------------
+Customer ID : 102
+Full Name : Andrew Tate
+Discount : 16
+Invoice ID : 1607
+Amount : 722.00 $
+--------------------
+Customer ID : 103
+Full Name : Ryan Giggs
+Discount : 16
+Invoice ID : 1714
+Amount : 4524.00 $
+--------------------
+Customer ID : 104
+Full Name : Thomas Tuchel
+Discount : 4
+Invoice ID : 1280
+Amount : 805.00 $
+--------------------
+Sample Output 0
+
+Customer ID : 101
+Full Name : Peter Cech
+Amount : 4361.70 $
+--------------------
+Customer ID : 100
+Full Name : Wayne Rooney
+Amount : 4203.68 $
+--------------------
+Customer ID : 103
+Full Name : Ryan Giggs
+Amount : 3800.16 $
+--------------------
+Customer ID : 104
+Full Name : Thomas Tuchel
+Amount : 772.80 $
+--------------------
+Customer ID : 102
+Full Name : Andrew Tate
+Amount : 606.48 $
+--------------------

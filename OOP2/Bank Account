@@ -1,0 +1,214 @@
+Cho lớp BankAccount gồm những thông tin :
+
+ID : Mã Bank account
+
+CustomerID : Mã khách hàng sở hữu tài khoản này
+
+Số tài khoản
+
+PIN Code : Mã pin
+
+Số dư tài khoản : Số nguyên
+
+Bạn hãy cập nhật số dư của từng tài khoản sau khi thực hiện 1 loạt các giao dịch chuyển, rút, nạp tiền.
+
+Nếu là giao dịch chuyển tiền sẽ có dạng : X Y Z trong đó X là số tài khoản người gửi, Y là số tài khoản người nhận, Z là số tiền. Bạn chỉ được thực hiện giao dịch nếu số dư khả dụng tài khoản X lớn hơn hoặc bằng số tiền cần chuyển Z, biết rằng để duy trì tài khoản cần 50.000
+
+Nếu giao dịch là rút sẽ có dạng : X Y, trong đó X là tài khoản rút tiền, Y là số tiền cần rút, chỉ thực hiện giao dịch khi số dư khả dụng của tài khoản X lớn hơn hoặc bằng số tiền cần rút Y
+
+Nếu giao dịch là nạp sẽ có dạng : X Y, trong đó X là tài khoản nạp tiền, Y là lượng tiền cần nạp
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        Account[] accountList = new Account[n];
+        for(int i = 0; i < n; i++){
+            sc.nextLine();
+            accountList[i] = new Account(sc.nextLine(), sc.nextLine(), sc.nextLine(), sc.nextLine(), sc.nextInt());
+        }
+        int q = sc.nextInt(); 
+        for(int i = 0; i < q; i++){
+            sc.nextLine();
+            String tran = sc.nextLine();
+            if(tran.equals("withdraw")){
+                String taiKhoan = sc.next();
+                int tien = sc.nextInt();
+                int pos = Account.findPos(accountList, taiKhoan);
+                accountList[pos].withdraw(tien);
+            }
+            else if(tran.equals("deposit")){
+                String taiKhoan = sc.next();
+                int tien = sc.nextInt();
+                int pos = Account.findPos(accountList, taiKhoan);
+                accountList[pos].deposit(tien);   
+            }
+            else{
+                String X = sc.next();
+                String Y = sc.next();
+                int tien = sc.nextInt();
+                int pos1 = Account.findPos(accountList, X);
+                int pos2 = Account.findPos(accountList, Y);
+                if(accountList[pos1].getSoDu() - 50000 >= tien){
+                    accountList[pos1].withdraw(tien);
+                    accountList[pos2].deposit(tien);
+                }
+            }
+        }
+        for(Account x : accountList){
+            System.out.println(x);
+        }
+    }
+}
+
+class Account {
+    private String id, customerId;
+    private String soTaiKhoan, PIN;
+    private int soDu;
+
+    public Account(String id, String customerId, String soTaiKhoan, String PIN, int soDu) {
+        this.id = id;
+        this.customerId = customerId;
+        this.soTaiKhoan = soTaiKhoan;
+        this.PIN = PIN;
+        this.soDu = soDu;
+    }
+
+    public void deposit(int tien){
+        this.soDu += tien;
+    }
+    
+    public void withdraw(int tien){
+        if(this.soDu - 50000 >= tien){
+            this.soDu -= tien;
+        }
+    }
+    
+    public int getSoDu(){
+        return this.soDu;
+    }
+    public static int findPos(Account[] a, String soTaiKhoan){
+        for(int i = 0; i < a.length; i++){
+            if(a[i].soTaiKhoan.equals(soTaiKhoan)){
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    public String toString(){
+        return "ID : " + this.id + "\nCusID : " + this.customerId + "\nNumber : " + this.soTaiKhoan + "\nPIN : " + this.PIN 
+                + "\nBalance : " + this.soDu + "VND\n-------------------";
+    }
+}
+Input Format
+
+Dòng 1 là N : Số lượng BankAccount
+
+5 * N dòng tiếp theo mô tả thông tin tài khoản, mỗi tài khoản gồm 5 dòng
+
+Dòng tiếp theo là T : số giao dịch
+
+T dòng tiếp theo mô tả giao dịch, mỗi giao dịch gồm 2 dòng, dòng 1 là loại giao dịch : transfer : Chuyển tiền, withdraw : rút tiền, deposit : nạp tiền. Dòng 2 là mô tả giao dịch
+
+Constraints
+
+1<=N<=5000
+
+1<=T<=5000
+
+Lượng tiền trong các giao dịch là số nguyên
+
+Output Format
+
+In ra danh sách tài khoản theo thứ tự ban đầu và các thông tin liên quan, mỗi thông tin trên 1 dòng, các tài khoản viết cách nhau một dòng gồm các dấu gạch dưới, xem Output mẫu để rõ hơn.
+Sample Input 0
+
+6
+8s312
+s1a8k
+690868516564
+08799297
+14000000
+s7dw2
+1d17c
+438356058671
+17847396
+2000000
+ir188
+ac8ak
+001206584176
+30339544
+37000000
+7c1zi
+lak2l
+413371350595
+69057560
+66000000
+s2w88
+icdkd
+652652106407
+67576215
+63000000
+1l3a3
+12sb3
+227430161615
+76168654
+85000000
+8
+deposit
+227430161615 95000000
+withdraw
+652652106407 26000000
+transfer
+001206584176 652652106407 89000000
+withdraw
+413371350595 67000000
+transfer
+413371350595 227430161615 12000000
+withdraw
+001206584176 98000000
+deposit
+227430161615 17000000
+transfer
+001206584176 227430161615 54000000
+Sample Output 0
+
+ID : 8s312
+CusID : s1a8k
+Number : 690868516564
+PIN : 08799297
+Balance : 14000000VND
+-------------------
+ID : s7dw2
+CusID : 1d17c
+Number : 438356058671
+PIN : 17847396
+Balance : 2000000VND
+-------------------
+ID : ir188
+CusID : ac8ak
+Number : 001206584176
+PIN : 30339544
+Balance : 37000000VND
+-------------------
+ID : 7c1zi
+CusID : lak2l
+Number : 413371350595
+PIN : 69057560
+Balance : 54000000VND
+-------------------
+ID : s2w88
+CusID : icdkd
+Number : 652652106407
+PIN : 67576215
+Balance : 37000000VND
+-------------------
+ID : 1l3a3
+CusID : 12sb3
+Number : 227430161615
+PIN : 76168654
+Balance : 209000000VND
+-------------------

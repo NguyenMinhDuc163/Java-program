@@ -1,0 +1,186 @@
+Cho lớp MonHoc gồm các thuộc tính : Tên môn học, số tín chỉ, điểm số. Lớp Sinh viên gồm các thuộc tính : Mã sinh viên, họ tên, lớp, các môn học đã từng học qua.
+
+Bạn hãy tiến hành tính điểm gpa cho từng sinh viên dựa vào danh sách những môn học mà sinh viên này đã từng học. Điểm gpa được tính theo công thức dưới đây :image
+
+Input Format
+
+Dòng 1 là N : số lượng sinh viên
+
+Thông tin của mỗi sinh viên được mô tả như sau : Dòng 1. Mã sinh viên, dòng 2 là họ tên, dòng 3 là lớp, dòng 4 là số lượng môn học đã học. Các dòng tiếp theo mô tả môn học, mỗi môn học gồm 3 dòng : Dòng 1 là tên môn học, dòng 2 là số tín chỉ và điểm số.
+
+Constraints
+
+1<=N<=1000
+Output Format
+
+In ra danh sách sinh viên theo điểm gpa giảm dần, nếu 2 sinh viên có cùng điểm gpa thì sắp xếp theo mã sinh viên tăng dần
+Sample Input 0
+
+5
+------------------------
+SV1
+Cedric Newton
+IT1
+6
+C++
+4 1.00
+Java
+4 1.00
+C
+3 1.00
+DSA
+2 3.00
+Web
+3 0.00
+Mobile
+3 0.00
+------------------------
+SV2
+Cedric Patterson
+IT2
+7
+C++
+3 3.00
+Java
+3 1.00
+C
+5 0.00
+DSA
+2 0.00
+Web
+4 1.00
+Mobile
+5 0.00
+Machine Learning
+3 2.00
+------------------------
+SV3
+Charlie Burns
+IT2
+3
+C++
+3 0.00
+Java
+3 4.00
+C
+2 4.00
+------------------------
+SV4
+Roberto Ellis
+IT4
+3
+C++
+5 0.00
+Java
+5 1.00
+C
+4 4.00
+------------------------
+SV5
+Mark Ellis
+IT4
+7
+C++
+5 3.00
+Java
+3 2.00
+C
+3 2.00
+DSA
+2 1.00
+Web
+2 2.00
+Mobile
+5 2.00
+Machine Learning
+5 1.00
+Sample Output 0
+
+SV3 Charlie Burns IT2 2.50
+------------------------
+SV5 Mark Ellis IT4 1.92
+------------------------
+SV4 Roberto Ellis IT4 1.50
+------------------------
+SV1 Cedric Newton IT1 0.89
+------------------------
+SV2 Cedric Patterson IT2 0.88
+------------------------
+Sample Input 1
+
+5
+------------------------
+SV1
+Mark Rodriguez
+IT4
+5
+C++
+5 3.00
+Java
+2 1.00
+C
+3 4.00
+DSA
+4 1.00
+Web
+4 4.00
+------------------------
+SV2
+Milton Harris
+IT1
+3
+C++
+4 4.00
+Java
+2 2.00
+C
+5 4.00
+------------------------
+SV3
+Harold Bennett
+IT2
+3
+C++
+4 3.00
+Java
+2 3.00
+C
+2 4.00
+------------------------
+SV4
+Aaron Gross
+IT1
+4
+C++
+5 1.00
+Java
+2 0.00
+C
+2 3.00
+DSA
+5 4.00
+------------------------
+SV5
+Stuart Stanley
+IT1
+4
+C++
+4 1.00
+Java
+5 1.00
+C
+4 4.00
+DSA
+4 4.00
+Sample Output 1
+
+SV2 Milton Harris IT1 3.64
+------------------------
+SV3 Harold Bennett IT2 3.25
+------------------------
+SV1 Mark Rodriguez IT4 2.72
+------------------------
+SV5 Stuart Stanley IT1 2.41
+------------------------
+SV4 Aaron Gross IT1 2.21
+------------------------

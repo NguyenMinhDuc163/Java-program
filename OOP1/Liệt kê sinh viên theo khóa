@@ -1,0 +1,113 @@
+Thông tin về mỗi sinh viên gồm: - Mã sinh viên: dãy ký tự không có khoảng trống (không quá 15). Đảm bảo không trùng nhau.
+
+Họ và tên: độ dài không quá 100, chưa được chuẩn hóa và cần được chuẩn hóa trước khi in.
+
+Lớp: dãy ký tự không có khoảng trống (không quá 15).
+
+Email: dãy ký tự không có khoảng trống (không quá 15).
+
+Hãy nhập danh sách sinh viên và liệt kê sinh viên theo khóa học. Chú ý: dữ liệu khóa học thể hiện qua 4 chữ số đầu tiên trong mã sinh viên
+
+Input Format
+
+Dòng đầu ghi số sinh viên (không quá 1000).
+
+Mỗi sinh viên ghi trên 4 dòng lần lượt là: mã, họ tên, lớp, email.
+
+Sau đó sẽ có giá trị số Q là số truy vấn.
+
+Tiếp theo là Q dòng, mỗi dòng ghi năm bắt đầu khóa học theo định dạng yyyy.
+
+Constraints
+
+1<=Q<=100
+
+Output Format
+
+Với mỗi truy vấn, liệt kê danh sách sinh viên của khóa đó theo mẫu như trong ví dụ. Mỗi sinh viên ghi trên một dòng, các thông tin cách nhau một khoảng trống. Thứ tự sinh viên vẫn giữ nguyên như thứ tự ban đầu.
+
+Sample Input 0
+
+4
+20132238
+hoang dinh NAm
+CNTT1
+namhd@gmail.com
+20142231
+PhAM nGoc     tHuan
+HTTT2
+thuanpn@gmail.com 
+20148971
+Nguyen duc XUAN
+CNTT1
+xuannd@gmail.com 
+20132038
+PhAM vAn Hung
+CNTT2
+hungpv@gmail.com
+2
+2013
+2014
+Sample Output 0
+
+DANH SACH SINH VIEN KHOA 2013 :
+20132238 Hoang Dinh Nam CNTT1 namhd@gmail.com
+20132038 Pham Van Hung CNTT2 hungpv@gmail.com
+DANH SACH SINH VIEN KHOA 2014 :
+20142231 Pham Ngoc Thuan HTTT2 thuanpn@gmail.com
+20148971 Nguyen Duc Xuan CNTT1 xuannd@gmail.com
+
+import java.util.*;
+ class Problem {
+   String ma, ten, lop, email, khoa;
+
+    public Problem(String ma, String ten, String lop, String email) {
+        this.ma = ma;
+        this.ten = ten;
+        this.lop = lop;
+        this.email = email;
+        this.khoa = ma.substring(0,4);
+    }
+    public String getKhoa() {
+        return this.khoa;
+    }
+    public void chuanHoa(){
+        String []s = this.ten.split("\\s+");
+        String res = "";
+        for(String x: s){
+            res += Character.toUpperCase(x.charAt(0));
+            for(int i = 1 ; i < x.length(); i++){
+                res += Character.toLowerCase(x.charAt(i));
+            }
+            res += " ";
+        }
+        this.ten = res.trim();
+    }
+    public String toString(){
+        chuanHoa();
+        return ma + " " + ten + " " + lop + " " + email;
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        sc.useLocale(Locale.US);
+        int n = sc.nextInt();
+        sc.nextLine();
+        ArrayList<Problem> ans = new ArrayList<>();
+        for(int i = 0; i < n ;i++){
+            ans.add(new Problem(sc.nextLine(),sc.nextLine(), sc.nextLine(), sc.nextLine()));
+        }
+        int q = sc.nextInt();
+        sc.nextLine();
+        while(q --> 0){
+            String tmp = sc.nextLine();
+            System.out.println("DANH SACH SINH VIEN KHOA " + tmp + " :");
+            for(Problem x: ans){
+                if(x.getKhoa().equals(tmp))
+                    System.out.println(x);
+            }
+        }
+    }
+}
+    

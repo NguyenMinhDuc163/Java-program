@@ -1,0 +1,64 @@
+; Viết chương trình khai báo lớp Phân số gồm hai thuộc tính private là tử số và mẫu số. Sau đó thực hiện nhập vào một phân số và in ra phân số đó ở dạng tối giản.
+
+; Input Format
+
+; Có hai số nguyên dương lần lượt là tử số và mẫu số.
+
+; Constraints
+
+; Các giá trị đều nguyên dương và không quá 18 chữ số.
+
+; Output Format
+
+; Ghi ra phân số tối giản;
+
+; Sample Input 0
+
+; 334 37
+; Sample Output 0
+
+; 334/37
+; Sample Input 1
+
+; 312 945
+; Sample Output 1
+
+; 104/315
+
+import java.util.Scanner;
+
+ class Problem {
+    private long tu;
+    private long mau;
+
+
+    public Problem(long tu, long mau) {
+        this.tu = tu;
+        this.mau = mau;
+    }
+
+    public void setTer(long tu, long mau) {
+        this.tu = tu ;
+        this.mau = mau ;
+    }
+
+
+    @Override
+    public String toString() {
+        return tu + "/" + mau ;
+    }
+}
+
+public class Main {
+    public static long gcd(long a, long b){
+        return b == 0 ? a : gcd(b, a % b);
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        long tu = sc.nextLong(), mau = sc.nextLong();
+        Problem a = new Problem(tu, mau);
+        long gcd = gcd(tu, mau);
+        a.setTer(tu / gcd, mau / gcd);
+        System.out.println(a);
+    }
+}

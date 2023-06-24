@@ -1,0 +1,40 @@
+Một nhân viên làm việc trong công ty được lưu lại các thông tin sau: • Mã nhân viên: được gán tự động tăng, bắt đầu từ 00001. • Họ tên: Xâu ký tự không quá 40 chữ cái. • Giới tính: Nam hoặc Nu. • Ngày sinh: đúng theo chuẩn dd/mm/yyyy. • Địa chỉ: Xâu ký tự không quá 100 chữ cái. • Mã số thuế: Dãy số có đúng 10 chữ số. • Ngày ký hợp đồng: đúng theo chuẩn dd/mm/yyyy. Viết chương trình nhập danh sách nhân viên (không nhập mã) sau đó sắp xếp theo thứ tự ngày sinh từ già nhất đến trẻ nhất và in ra màn hình danh sách đối tượng nhân viên đã sắp xếp. Nếu có 2 nhân viên có cùng ngày sinh thì in ra nhân viên có mã nhân viên nhỏ hơn.
+
+Input Format
+
+Dòng đầu ghi số N là số nhân viên (không quá 40). Mỗi nhân viên ghi trên 6 dòng lần lượt ghi các thông tin theo thứ tự đã ghi trong đề bài. Không có mã nhân viên. Thông tin về ngày sinh và ngày kí hợp đồng được chuẩn hóa.
+
+Constraints
+
+N/A
+
+Output Format
+
+Ghi ra danh sách đầy đủ nhân viên đã sắp xếp, mỗi nhân viên trên một dòng, các thông tin cách nhau đúng một khoảng trống.
+
+Sample Input 0
+
+3
+Nguyen Van A
+Nam
+17/10/1995
+Bac Ninh
+9778128747
+6/11/2022
+Nguyen Thi B
+Nu
+18/09/1997
+Hai Duong
+7823490168
+5/4/2022
+Nguyen Thi C
+Nu
+02/04/1995
+Ninh Binh
+7400512775
+27/1/2020
+Sample Output 0
+
+00003 Nguyen Thi C Nu 02/04/1995 Ninh Binh 7400512775 27/01/2020
+00001 Nguyen Van A Nam 17/10/1995 Bac Ninh 9778128747 06/11/2022
+00002 Nguyen Thi B Nu 18/09/1997 Hai Duong 7823490168 05/04/2022

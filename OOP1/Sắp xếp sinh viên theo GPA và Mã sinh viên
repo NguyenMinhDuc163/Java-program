@@ -1,0 +1,115 @@
+Viết chương trình khai báo lớp Sinh Viên gồm các thông tin:
+
+Mã SV
+
+Họ tên
+
+Ngày sinh
+
+Lớp
+
+Điểm GPA (dạng số thực).
+
+Đọc thông tin N thí sinh từ bàn phím (không nhập mã sinh viên) sau đó sắp xếp theo điểm GPA giảm dần và in ra lần lượt màn hình mỗi dòng 1 sinh viên. Nếu 2 bạn có cùng GPA thì bạn nào có mã sinh viên nhỏ hơn sẽ xếp trước.
+
+Trong đó Mã SV được tự tạo ra theo quy tắc thêm mã SV sau đó là giá trị nguyên tự động tăng tính từ 001 (tối đa là 050). Họ tên được xử lý đưa về dạng chuẩn. Ngày sinh được chuẩn hóa về dạng dd/mm/yyyy
+
+Input Format
+
+Dòng đầu tiên ghi số sinh viên N (0 < N < 50). Mỗi sinh viên ghi trên 4 dòng lần lượt là Họ tên, Lớp, Ngày sinh và Điểm GPA. Trong đó: - Họ tên không quá 30 chữ cái.
+
+Lớp là một chuỗi kí tự không có dấu cách.
+
+Ngày sinh có đủ 3 phần ngày tháng năm nhưng có thể chưa đúng chuẩn dd/mm/yyyy.
+
+Điểm GPA đảm bảo trong thang điểm 4 với 2 nhiều nhất 2 số sau dấu phẩy.
+
+Constraints
+
+N/A
+
+Output Format
+
+Ghi ra danh sách lần lượt các sinh viên có đầy đủ Mã sinh viên, Họ tên, Lớp, Ngày sinh (đã chuẩn hóa), điểm GPA (với đúng 2 số sau dấu phẩy) đã được sắp xếp theo điểm GPA giảm dần. Mỗi sinh viên ghi trên 1 dòng, mỗi thông tin cách nhau 1 khoảng trống.
+
+Sample Input 0
+
+2
+ngUYen Van NaM
+CNTT1
+2/12/1994
+2.17
+Nguyen QuanG hAi
+CNTT2
+1/9/1994
+3.0
+Sample Output 0
+
+SV002 Nguyen Quang Hai CNTT2 01/09/1994 3.00
+SV001 Nguyen Van Nam CNTT1 02/12/1994 2.17
+
+
+import java.util.*;
+
+ class Problem {
+    String ma, ten , ngaySinh, lop;
+    double gpa;
+
+    public Problem(int idx, String ten, String lop, String ngaySinh, double gpa) {
+        this.ma = String.format("SV%03d",idx);
+        this.ten = ten;
+        this.ngaySinh = ngaySinh;
+        this.lop = lop;
+        this.gpa = gpa;
+    }
+    public void stdNS(){
+        StringBuilder sb = new StringBuilder(ngaySinh);
+        if(sb.charAt(1) == '/')
+            sb.insert(0,"0");
+        if(sb.charAt(4) == '/')
+            sb.insert(3,"0");
+        this.ngaySinh = sb.toString();
+    }
+    public void stdName(){
+        String[] s = ten.split("\\s+");
+        String res = "";
+        for(String x: s){
+            res += Character.toUpperCase(x.charAt(0));
+            for(int i = 1; i < x.length(); i++){
+                res += Character.toLowerCase(x.charAt(i));
+            }
+            res += " ";
+        }
+        this.ten = res.trim();
+    }
+    public double getGpa(){
+        return this.gpa;
+    }
+     
+    public String toString(){
+        stdNS();
+        stdName();
+        return ma + " " + ten + " " + lop + " " + ngaySinh + " " + String.format("%.2f",gpa);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        sc.useLocale(Locale.US);
+        int n = sc.nextInt();
+        ArrayList<Problem> ans = new ArrayList<>();
+        for(int i = 0; i <  n ;i++){
+            sc.nextLine();
+            ans.add(new Problem(i + 1,sc.nextLine(), sc.nextLine(), sc.nextLine(), sc.nextDouble()));
+        }
+        ans.sort(new Comparator<Problem>(){
+            public int compare(Problem a, Problem b){
+                return Double.compare(b.getGpa(), a.getGpa());
+            }
+        });
+        for(Problem x: ans){
+            System.out.println(x);
+        }
+    }
+}

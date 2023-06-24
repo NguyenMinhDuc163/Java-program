@@ -1,0 +1,79 @@
+Cho thiết kế lớp MyTime như sau :
+
+image
+
+Cho thông tin thời gian hiện tại, bạn hãy sử dụng 6 hàm đã xây dựng trong lớp MyTime để in ra :
+
+Thời gian kế tiếp sau thời gian hiện tại 1s, 1 phút, 1 giờ
+
+Thời gian trước thời gian hiện tại 1s, 1 phút, 1 giờ
+
+Input Format
+
+Dòng duy nhất mô tả thời gian dạng : hh:mm:ss
+Constraints
+
+0<=hh<=23
+
+0<=mm<=59
+
+0<=ss<=59
+
+Output Format
+
+In ra lần lượt 6 dòng thời gian kết quả định dạng : hh:mm:ss
+
+Sample Input 0
+
+23:00:37
+Sample Output 0
+
+23:00:38
+23:01:37
+00:00:37
+23:00:36
+22:59:37
+22:00:37
+
+import java.util.*;
+ class MyTime {
+    private int hour, minute, second;
+
+    public MyTime(int hour, int minute, int second) {
+        this.hour = hour;
+        this.minute = minute;
+        this.second = second;
+    }
+    public void solve(int total){
+        int hh = total / 3600; total %= 3600;
+        if(hh == 24){
+            hh = 0;
+        }
+        int mm = total / 60 ; total %= 60;
+        if(mm == 3600){
+            mm = 0;
+            hh++;
+        }
+        int ss = total;
+        System.out.printf("%02d:%02d:%02d%n",hh, mm, ss);
+    }
+    public void display(){
+        int total = hour * 3600 + minute * 60 + second;
+        solve(total + 1);
+        solve(total + 60);
+        solve(total + 3600);
+        solve(total - 1);
+        solve(total - 60);
+        solve(total - 3600);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        sc.useLocale(Locale.US);
+        String []time = sc.nextLine().split(":");
+        MyTime myTime = new MyTime(Integer.parseInt(time[0]), Integer.parseInt(time[1]),Integer.parseInt(time[2]));
+        myTime.display();
+    }
+}

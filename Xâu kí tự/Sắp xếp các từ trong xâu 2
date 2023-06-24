@@ -1,0 +1,43 @@
+Cho một xâu kí tự S bao gồm các chữ cái và dấu cách, một từ được định nghĩa là các kí tự liên tiếp không chứa dấu cách, hãy sắp xếp các từ thuận nghịch khác nhau trong xâu theo thứ tự từ chiều dài tăng dần, nếu 2 từ thuận nghịch có cùng chiều dài thì từ nào xuất hiện trước sẽ được in ra trước.
+
+Input Format
+
+Dòng duy nhất chứa xâu S.
+
+Constraints
+
+1≤len(S)≤100000;
+
+Output Format
+
+In ra các từ theo thứ tự sắp xếp yêu cầu, các từ được in cách nhau một dấu cách.
+
+Sample Input 0
+
+php aba aaaa nguyen huu hoc pop
+Sample Output 0
+
+php aba pop aaaa
+
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String []s = sc.nextLine().split("\\s+");
+        LinkedHashSet<String> se = new LinkedHashSet<>();
+        for(String x: s){
+            if(x.equals(new StringBuilder(x).reverse().toString()))
+                se.add(x);
+        }
+        LinkedList<String> list = new LinkedList<>(se);
+        list.sort(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.length() - o2.length();
+            }
+        });
+        for(String x: list)
+            System.out.print(x + " ");
+    }
+}

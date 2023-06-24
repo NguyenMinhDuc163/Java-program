@@ -1,0 +1,24 @@
+Trong lập trình cơ bản, một từ được hiểu là một dãy ký tự liên tiếp không chứa khoảng trống, dấu tab hoặc dấu xuống dòng. Xây dựng lớp WordSet để quản lý tập hợp các từ khác nhau trong một xâu ký tự, sau khi đã chuyển hết về dạng chữ thường. Khi liệt kê thì tập từ thì sẽ luôn theo thứ tự từ điển tăng dần Viết chương trình nhập hai dòng ký tự và hiển thị hợp và giao của hai tập từ tương ứng. Sử dụng hàm main có nội dung sẵn như sau :
+
+image
+
+Input Format
+
+Chỉ có 2 dòng, mỗi dòng có độ dài không quá 1000 ký tự.
+
+Constraints
+
+N/A
+
+Output Format
+
+Dòng 1 ghi hợp của 2 tập từ theo thứ tự từ điển Dòng 2 ghi giao của 2 tập từ theo thứ tự từ điển.
+
+Sample Input 0
+
+aabc cbcac bbaa aaa acaba ccc abaaa 
+caa aaa abaa aba abc acb aacb aabaa 
+Sample Output 0
+
+aaa aabaa aabc aacb aba abaa abaaa abc acaba acb bbaa caa cbcac ccc 
+aaa 

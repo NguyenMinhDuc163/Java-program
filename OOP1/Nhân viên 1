@@ -1,0 +1,86 @@
+Một nhân viên làm việc trong công ty được lưu lại các thông tin sau: • Mã nhân viên: được gán tự động tăng, bắt đầu từ 00001 • Họ tên: Xâu ký tự không quá 40 chữ cái. • Giới tính: Nam hoặc Nu • Ngày sinh: đúng theo chuẩn dd/mm/yyyy • Địa chỉ: Xâu ký tự không quá 100 chữ cái • Mã số thuế: Dãy số có đúng 10 chữ số • Ngày ký hợp đồng: đúng theo chuẩn dd/mm/yyyy Viết chương trình nhập danh sách nhân viên (không nhập mã) trong đó có sử dụng chồng toán tử nhập/xuất và in ra màn hình danh sách vừa nhập.
+
+Input Format
+
+Dòng đầu ghi số N là số nhân viên (không quá 40). Mối nhân viên ghi trên 6 dòng lần lượt ghi các thông tin theo thứ tự đã ghi trong đề bài. Không có mã nhân viên.
+
+Constraints
+
+N/A
+
+Output Format
+
+Ghi ra danh sách đầy đủ nhân viên, mỗi nhân viên trên một dòng, các thông tin cách nhau đúng một khoảng trống. Thông tin nhân viên được chuẩn hóa ngày sinh và ngày kí hợp đồng.
+
+Sample Input 0
+
+3
+Nguyen Van A
+Nam
+22/10/1982
+Mo Lao-Ha Dong-Ha Noi
+8333012345
+31/12/2013
+Ly Thi B
+Nu
+15/10/1988
+Mo Lao-Ha Dong-Ha Noi
+8333012346
+22/08/2011
+Hoang Thi C
+Nu
+04/02/1981
+Mo Lao-Ha Dong-Ha Noi
+8333012347
+22/08/2011
+Sample Output 0
+
+00001 Nguyen Van A Nam 22/10/1982 Mo Lao-Ha Dong-Ha Noi 8333012345 31/12/2013
+00002 Ly Thi B Nu 15/10/1988 Mo Lao-Ha Dong-Ha Noi 8333012346 22/08/2011
+00003 Hoang Thi C Nu 04/02/1981 Mo Lao-Ha Dong-Ha Noi 8333012347 22/08/2011
+
+
+import java.util.*;
+ class Problem {
+    String id, name, sex, birth, address, tax, signDay;
+
+    public Problem(int idx, String name, String sex, String birth, String address, String tax, String signDay) {
+        this.id = String.format("%05d",idx);
+        this.name = name;
+        this.sex = sex;
+        this.birth = birth;
+        this.address = address;
+        this.tax = tax;
+        this.signDay = signDay;
+    }
+    public void stdBirth(){
+        StringBuilder sb = new StringBuilder(birth);
+        if(sb.charAt(1) == '/') sb.insert(0,"0");
+        if(sb.charAt(4) == '/') sb.insert(3,"0");
+        this.birth = sb.toString();
+        StringBuilder sb1 = new StringBuilder(signDay);
+        if(sb1.charAt(1) == '/') sb1.insert(0,"0");
+        if(sb1.charAt(4) == '/') sb1.insert(3,"0");
+        this.signDay = sb1.toString();
+    }
+    public String toString(){
+        stdBirth();
+        return id + " " + name + " " + sex +  " " + birth + " " + address  + " " + tax + " " + signDay;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        sc.useLocale(Locale.US);
+        int n = sc.nextInt();
+        sc.nextLine();
+        ArrayList<Problem> ans = new ArrayList<>();
+        for(int i = 0; i <  n ;i++){
+            ans.add(new Problem(i + 1,sc.nextLine(), sc.nextLine(), sc.nextLine(), sc.nextLine(), sc.nextLine(), sc.nextLine()));
+        }
+        for(Problem x: ans){
+            System.out.println(x);
+        }
+    }
+}

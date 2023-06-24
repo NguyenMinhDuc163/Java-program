@@ -1,0 +1,68 @@
+Viết chương trình khai báo lớp Sinh Viên gồm các thông tin: Mã SV, Họ tên, Lớp, Ngày sinh và Điểm GPA (dạng số thực float). Hàm khởi tạo không có tham số, gán các giá trị thuộc tính ở trạng thái mặc định (xâu ký tự rỗng, giá trị số bằng 0). Đọc thông tin 1 sinh viên từ bàn phím (không có mã sinh viên) và in ra màn hình. Trong đó Mã SV được gán là SV001. Ngày sinh được chuẩn hóa về dạng dd/mm/yyyy.
+
+Input Format
+
+Gồm 4 dòng : 1. Họ tên không quá 30 chữ cái.
+
+Lớp là một chuỗi không có dấu cách
+
+Ngày sinh có đủ 3 phần ngày tháng năm nhưng có thể chưa đúng chuẩn dd/mm/yyyy.
+
+Điểm GPA đảm bảo trong thang điểm 4 với 2 nhiều nhất 2 số sau dấu phẩy.
+
+Constraints
+
+N/A
+
+Output Format
+
+Ghi thông tin sinh viên trên 1 dòng, mỗi thông tin cách nhau 1 khoảng trống, gpa lấy 1 chữ số sau dấu phẩy
+
+Sample Input 0
+
+Nguyen Van Nam
+CNTT1
+16/8/2001
+2.8
+Sample Output 0
+
+SV001 Nguyen Van Nam CNTT1 16/08/2001 2.8
+import java.util.Locale;
+import java.util.Scanner;
+
+ class Problem {
+    private String name;
+    private String className;
+    private String birth;
+    private double gpa;
+
+    public Problem(String name, String className, String birth, double gpa) {
+        this.name = name;
+        this.className = className;
+        this.birth = birth;
+        this.gpa = gpa;
+    }
+    public void chuanHoa(){
+        StringBuilder sb = new StringBuilder(this.birth);
+        if(sb.charAt(1) == '/'){
+            sb.insert(0, "0");
+        }
+        if(sb.charAt(4) == '/') {
+            sb.insert(3,"0");
+        }
+        this.birth = sb.toString();
+    }
+    public String toString(){
+        return "SV001" + " " + name + " " + className + " " + birth + " " + String.format("%.1f", gpa);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        sc.useLocale(Locale.US);
+        Problem x = new Problem(sc.nextLine(), sc.nextLine(), sc.nextLine(), sc.nextDouble());
+        x.chuanHoa();
+        System.out.println(x);
+    }
+}

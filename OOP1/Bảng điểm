@@ -1,0 +1,52 @@
+Trường THCS XYZ lập bảng điểm tổng kết cho học sinh. Có 10 môn học lần lượt gồm: Toán, Tiếng Việt, Ngoại ngữ, Vật lý, Hóa học, Sinh học, Lịch Sử, Địa, Giáo dục công dân và môn Công nghệ. Trong đó các môn đều có hệ số là 1. Học sinh được xếp hạng theo điểm trung bình:
+
+• Từ 9 trở lên: loại XUAT SAC.
+
+• Từ 8 đến 8.9: loại GIOI.
+
+• Từ 7 đến 7.9: loại KHA.
+
+• Từ 5 đến 6.9: loại TB.
+
+• Dưới 5: loai YEU Hãy lập bảng điểm tổng kết và sắp xếp theo điểm trung bình giảm dần.
+
+Input Format
+
+Dòng đầu ghi số học sinh (không quá 50). Thông tin về mỗi học sinh có hai dòng: dòng đầu là họ tên (độ dài không quá 50), dòng thứ 2 gồm 10 số thực trong đoạn [0..10] lần lượt là điểm 10 môn theo đúng thứ tự đã mô tả.
+
+Constraints
+
+Chú ý : Sau điểm cuối cùng có dấu cách :)
+
+Output Format
+
+Danh sách đã sắp xếp được ghi ra bao gồm các thông tin: • Mã học sinh (tự động gán tăng dần theo thứ tự nhập, bắt đầu là HS01
+
+• Họ và tên
+
+• Điểm trung bình (với 1 chữ số phần thập phân)
+
+• Xếp loại
+
+Trong trường hợp điểm trung bình bằng nhau thì học sinh nào có mã học sinh nhỏ hơn sẽ xếp trên.
+
+Sample Input 0
+
+5
+Tran Duc Luong
+7.8 5.9 9.0 7.2 6.5 4.6 8.3 9.6 4.0 6.0 
+Do Xuan Loc
+8.4 0.9 4.4 4.6 2.4 9.5 2.1 3.6 9.5 6.3 
+Vu Duc Hieu
+6.5 8.8 7.7 9.4 2.9 0.5 1.5 3.7 4.8 6.9 
+Phan Van Nam
+8.2 6.4 8.3 2.3 8.3 2.9 8.7 7.1 9.4 3.4 
+Vu Duc Minh
+7.8 5.3 8.3 1.6 2.6 9.8 0.6 0.1 5.2 2.6 
+Sample Output 0
+
+HS01 Tran Duc Luong 6.9 TB
+HS04 Phan Van Nam 6.5 TB
+HS03 Vu Duc Hieu 5.3 TB
+HS02 Do Xuan Loc 5.2 TB
+HS05 Vu Duc Minh 4.4 YEU
