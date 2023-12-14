@@ -1,121 +1,135 @@
+codeptit/Main.java
 package codeptit;
 
 import java.util.*;
 
-public class J06008 {
-    static class sub {
-        String code, name;
-        double sum;
-
-        public sub(String s) {
-            String[] a = s.trim().split(" ", 2);
-            code = a[0];
-            name = a[1];
-        }
-
-        public sub(sub x) {
-            code = x.code;
-            name = x.name;
-            sum = x.sum;
-        }
-
-        public boolean is(String s) {
-            return s.startsWith(code);
-        }
-
-        @Override
-        public String toString() {
-            return name + ' ' + sum;
-        }
-    }
-
-    static class gv {
-        String code, name;
-        double sum;
-        ArrayList<sub> a;
-
-        public gv(String s) {
-            a = new ArrayList<>();
-            sum = 0;
-            String[] a = s.trim().split(" ", 2);
-            code = a[0];
-            name = a[1];
-        }
-
-        public boolean is(String s) {
-            return s.startsWith(code);
-        }
-
-        public boolean contain(sub x) {
-            for (int i = 0; i < a.size(); i++) {
-                if (a.get(i).is(x.code))
-                    return true;
-            }
-            return false;
-        }
-
-        public void add(sub x) {
-            if (this.contain(x)) {
-                for (int i = 0; i < a.size(); i++) {
-                    if (a.get(i).is(x.code)) {
-                        a.get(i).sum += x.sum;
-                        break;
-                    }
-                }
-            } else {
-                this.a.add(x);
-            }
-        }
-
-        @Override
-        public String toString() {
-            return name + ' ' + String.format("%.2f", sum);
-        }
-    }
-
+/**
+ *
+ * @author DELL
+ */
+public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int k = sc.nextInt();
-        ArrayList<sub> s = new ArrayList<>();
-        sc.nextLine();
-        for (int i = 0; i < k; i++) {
-            s.add(new sub(sc.nextLine()));
+        sc.useLocale(Locale.US);
+        HashMap<String, Subject> subjects = new HashMap<>();
+        HashMap<String, Teacher> teachers = new HashMap<>();
+        List<Schedule> schedules = new ArrayList<>();
+        int n = Integer.parseInt(sc.nextLine());
+        for(int i = 1; i <= n; i++){
+           String []s = sc.nextLine().split(" ", 2);
+           Subject subject = new Subject(s[0], s[1]);
+           subjects.put(s[0], subject);
         }
-        int n = sc.nextInt();
-        ArrayList<gv> a = new ArrayList<>();
-        sc.nextLine();
-        for (int i = 1; i <= n; i++)
-            a.add(new gv(sc.nextLine()));
-        int m = sc.nextInt();
-        for (int i = 0; i < m; i++) {
-            String gcode = sc.next();
-            String scode = sc.next();
-            double time = sc.nextDouble();
-            int ind = 0;
-            sub x = new sub(s.get(0));
-            for (int j = 0; j < n; j++) {
-                if (a.get(j).is(gcode)) {
-                    ind = j;
-                    break;
-                }
-            }
-            for (int j = 0; j < k; j++) {
-                if (s.get(j).is(scode)) {
-                    x=new sub(s.get(j));
-                    break;
-                }
-            }
-            x.sum = time;
-            a.get(ind).add(x);
-            a.get(ind).sum += x.sum;
+        int m = Integer.parseInt(sc.nextLine());
+        for(int i = 1; i <= m; i++){
+            String []s = sc.nextLine().split(" ", 2);
+            Teacher teacher = new Teacher(s[0], s[1]);
+            teachers.put(s[0], teacher);
         }
-        String code = sc.next();
-        for (int i = 0; i < n; i++) {
-            if(a.get(i).is(code)){
-                System.out.printf("Giang vien: %s\n", a.get(i).name);
-                a.get(i).a.forEach(e -> System.out.println(e));
-                System.out.printf("Tong: %.2f", a.get(i).sum);
+        int k = Integer.parseInt(sc.nextLine());
+        for(int i = 1; i <= k; i++){
+            String []s = sc.nextLine().split(" ");
+            Teacher teacher = teachers.get(s[0]);
+            Subject subject = subjects.get(s[1]);
+            schedules.add(new Schedule(subject, teacher, s[2]));
+        }
+        String teacher = sc.nextLine();
+        System.out.println(teachers.get(teacher));
+        double timeWork = 0;
+        for(Schedule x : schedules){
+            if(x.getTeacherID().equals(teacher)){
+                System.out.println(x);
+                timeWork += x.getTimeWork();
             }
         }
+        System.out.printf("Tong: %.2f", timeWork );
+    }
+    
+}
+
+codeptit/Schedule.java
+package codeptit;
+
+import java.util.ArrayList;
+
+/**
+ *
+ * @author DELL
+ */
+public class Schedule {
+      private Subject subject;
+      private Teacher teacher;
+      private double timeWork;
+
+    public Schedule(Subject subject, Teacher teacher, String timeWork) {
+        this.subject = subject;
+        this.teacher = teacher;
+        this.timeWork = Double.parseDouble(timeWork);
+    }
+    public String getTeacherID(){
+        return teacher.getTeacherID();
+    }
+
+    public double getTimeWork() {
+        return timeWork;
+    }
+
+    @Override
+    public String toString() {
+        return subject + " " + timeWork;
+    }
+    
+}
+
+codeptit/Subject.java
+package codeptit;
+
+/**
+ *
+ * @author DELL
+ */
+public class Subject {
+    private String subjectID, subjectname;
+    private double timeWork;
+
+    public Subject(String subjectID, String subjectname) {
+        this.subjectID = subjectID;
+        this.subjectname = subjectname;
+        this.timeWork = 0;
+    }
+
+    public String getSubjectID() {
+        return subjectID;
+    }
+
+    @Override
+    public String toString() {
+        return subjectname ;
     }
 }
+
+codeptit/Teacher.java
+package codeptit;
+
+/**
+ *
+ * @author DELL
+ */
+public class Teacher {
+    private String teacherID, teacherName;
+
+    public Teacher(String teacherID, String teacherName) {
+        this.teacherID = teacherID;
+        this.teacherName = teacherName;
+    }
+
+    public String getTeacherID() {
+        return teacherID;
+    }
+
+    @Override
+    public String toString() {
+        return "Giang vien: " + teacherName;
+    }
+}
+
