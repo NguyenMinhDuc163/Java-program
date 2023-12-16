@@ -1,7 +1,4 @@
-package codeptit;
-
 import java.io.*;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -14,53 +11,24 @@ class Exam{
         this.hour = hour;
         this.room = room;
     }
-
-    public Exam(String day, String hour) {
-        this.day = day;
-        this.hour = hour;
+    public Date getDate(){
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyyHH:mm");
+        try{
+            return format.parse(day + hour);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    public String getDay() {
-        return day;
-    }
-
-    public String getHour() {
-        return hour;
-    }
-
-    public String getIdx() {
-        return idx;
-    }
-    
     @Override
     public String toString() {
         return String.format("%s %s %s %s", idx, day, hour, room);
     }
-    
+
 }
 public class J07059 {
-    public static int cmpDay(String a, String b){
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        try {
-            Date date1 = format.parse(a);
-            Date date2 = format.parse(b);
-            return date1.compareTo(date2);
-        } catch (Exception e) {
-            System.out.println(e);
-        }   
-        return 0;
-    }
-     public static int cmpHour(String a, String b){
-        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-        try {
-            Date date1 = format.parse(a);
-            Date date2 = format.parse(b);
-            return date1.compareTo(date2);
-        } catch (Exception e) {
-            System.out.println(e);
-        }   
-        return 0;
-    }
+
     public static void main(String[] args) throws IOException {
         Scanner sc =  new Scanner(new File("CATHI.in"));
         int n = sc.nextInt();
@@ -69,11 +37,7 @@ public class J07059 {
         for(int i = 1; i <= n; i++){
             exams.add(new Exam(i, sc.nextLine(), sc.nextLine(), sc.nextLine()));
         }
-        exams.stream().sorted( // sx theo ngay truoc
-        Comparator.comparing(Exam::getDay, J07059::cmpDay)
-                  .thenComparing(Exam::getHour, J07059::cmpHour)
-                  .thenComparing(Exam::getIdx)
-        ).forEach(System.out::println);
+        exams.stream().sorted(Comparator.comparing(Exam::getDate)).forEach(System.out::println);
 
     }
 }
