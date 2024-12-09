@@ -1,39 +1,47 @@
+package org.example.codepit;
+
 import java.util.ArrayList;
-import java.util.Locale;
+import java.util.Comparator;
 import java.util.Scanner;
- class Problem {
-    private String idx, name, unit;
-    private int gMua, gban;
 
-    public Problem(int idx, String name, String unit, int gMua, int gban) {
-        this.idx = String.format("MH%03d", idx);
-        this.name = name;
+class Product {
+    private String productID, productName, unit;
+    int priceIn, priceOut;
+
+    public Product(int index, String productName, String unit, int priceIn, int priceOut) {
+        this.productID = String.format("MH%03d", index);
+        this.productName = productName;
         this.unit = unit;
-        this.gMua = gMua;
-        this.gban = gban;
+        this.priceIn = priceIn;
+        this.priceOut = priceOut;
     }
 
-    public int getLoiNhuan() {
-        return gban - gMua;
+    int getProfit() {
+        return this.priceOut - this.priceIn;
     }
-    public String toString(){
-        return idx + " " + name + " " + unit + " " + gMua + " " + gban + " " + getLoiNhuan();
+
+    public String getProductID() {
+        return productID;
+    }
+
+    @Override
+    public String toString() {
+        return String.join(" ", this.productID, this.productName, this.unit, String.valueOf(this.priceIn), String.valueOf(this.priceOut), String.valueOf(getProfit()));
     }
 }
 
-public class Main {
+public class J05081 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        sc.useLocale(Locale.US);
         int n = sc.nextInt();
-        sc.nextLine();
-        ArrayList<Problem> a = new ArrayList<>();
-        for(int i = 1; i <= n; i++){
-            Problem tmp = new Problem(i, sc.nextLine(), sc.nextLine(), sc.nextInt(), sc.nextInt());
+        ArrayList<Product> products = new ArrayList<>();
+        for (int i = 1; i <= n; i++) {
             sc.nextLine();
-            a.add(tmp);
+            products.add(new Product(i, sc.nextLine(), sc.nextLine(), sc.nextInt(), sc.nextInt()));
         }
-        a.sort((x, y) -> Integer.compare(y.getLoiNhuan(), x.getLoiNhuan()));
-        a.forEach(System.out::println);
+
+        products.stream()
+                .sorted(Comparator.comparing(Product::getProfit).reversed())
+                .forEach(System.out::println);
     }
 }
